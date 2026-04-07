@@ -39,28 +39,16 @@ jobs:
         shell: pwsh
         run: |
           New-Item -ItemType Directory -Force -Path dist | Out-Null
-          $TARGET=(rustc -vV | Select-String '^host:' | ForEach-Object { $_.Line.Split(':')[1].Trim() })
-          $TAG=$env:GITHUB_REF_NAME
-          $NAME="repo-health-$TAG-$TARGET.exe"
-          $LATEST="repo-health-windows.exe"
-          Copy-Item target\release\repo-health.exe "dist\$NAME"
-          Copy-Item target\release\repo-health.exe "dist\$LATEST"
-          $HASH=(Get-FileHash -Algorithm SHA256 "dist\$NAME").Hash.ToLower()
-          "$HASH  $NAME" | Out-File -FilePath "dist\SHA256SUMS-$TARGET.txt" -Encoding ascii
-          "$HASH  $LATEST" | Out-File -FilePath "dist\SHA256SUMS-$TARGET.txt" -Encoding ascii -Append
+          Copy-Item target\release\repo-health.exe "dist\repo-health-windows.exe"
 
       - name: Prepare artifact (Unix)
         if: runner.os != 'Windows'
         shell: bash
         run: |
           mkdir -p dist
-          TARGET="$(rustc -vV | sed -n 's/^host: //p')"
-          TAG="${GITHUB_REF_NAME}"
-          NAME="repo-health-$TAG-$TARGET"
-          if [ "${RUNNER_OS}" = "Linux" ]; then LATEST="repo-health-linux"; else LATEST="repo-health-macos"; fi
+          if [ "${RUNNER_OS}" = "Linux" ]; then NAME="repo-health-linux"; else NAME="repo-health-macos"; fi
           cp target/release/repo-health "dist/$NAME"
-          cp target/release/repo-health "dist/$LATEST"
-          (cd dist && (shasum -a 256 "$NAME" "$LATEST" > "SHA256SUMS-$TARGET.txt" 2>/dev/null || sha256sum "$NAME" "$LATEST" > "SHA256SUMS-$TARGET.txt"))
+          chmod +x "dist/$NAME"
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
@@ -77,13 +65,6 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           path: artifacts
-
-      - name: Build SHA256SUMS.txt
-        shell: bash
-        run: |
-          set -euo pipefail
-          cd artifacts
-          find . -name 'SHA256SUMS-*.txt' -print0 | sort -z | xargs -0 cat > SHA256SUMS.txt
 
       - name: Publish GitHub Release
         uses: softprops/action-gh-release@v2

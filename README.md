@@ -39,7 +39,7 @@ Or:
 CertUtil -hashfile .\repo-health-windows.exe SHA256
 ```
 
-Compare it with the `SHA256SUMS.txt` asset from the same Release (it contains hashes for all binaries).
+Compare it with the SHA256 shown next to the asset on the GitHub Release page.
 
 ## Quick start
 
