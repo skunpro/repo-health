@@ -19,9 +19,9 @@ Download the latest build:
 
 Quick download:
 
-- [![Download Windows](https://img.shields.io/badge/download-windows-2ea043?style=for-the-badge)](https://github.com/skunpro/repo-health/releases/latest/download/repo-health-windows.exe)
-- [![Download Linux](https://img.shields.io/badge/download-linux-2ea043?style=for-the-badge)](https://github.com/skunpro/repo-health/releases/latest/download/repo-health-linux)
-- [![Download macOS](https://img.shields.io/badge/download-macos-2ea043?style=for-the-badge)](https://github.com/skunpro/repo-health/releases/latest/download/repo-health-macos)
+[![Download Windows](https://img.shields.io/badge/download-windows-2ea043?style=for-the-badge)](https://github.com/skunpro/repo-health/releases/latest/download/repo-health-windows.exe)
+[![Download Linux](https://img.shields.io/badge/download-linux-2ea043?style=for-the-badge)](https://github.com/skunpro/repo-health/releases/latest/download/repo-health-linux)
+[![Download macOS](https://img.shields.io/badge/download-macos-2ea043?style=for-the-badge)](https://github.com/skunpro/repo-health/releases/latest/download/repo-health-macos)
 
 Or open the Releases page: https://github.com/skunpro/repo-health/releases/latest
 
