@@ -1,4 +1,4 @@
-# Repo health scanner with a terminal UI.
+# repo-health
 
 [![Release](https://github.com/skunpro/repo-health/actions/workflows/release.yml/badge.svg)](https://github.com/skunpro/repo-health/actions/workflows/release.yml)
 [![CI](https://github.com/skunpro/repo-health/actions/workflows/ci.yml/badge.svg)](https://github.com/skunpro/repo-health/actions/workflows/ci.yml)
@@ -11,20 +11,32 @@ It scans a folder and produces:
 
 ## Installation
 
-Recommended: download the `repo-health` binary from GitHub Releases.
+Download the latest build:
+
+- Windows: https://github.com/skunpro/repo-health/releases/latest/download/repo-health-windows.exe
+- Linux: https://github.com/skunpro/repo-health/releases/latest/download/repo-health-linux
+- macOS: https://github.com/skunpro/repo-health/releases/latest/download/repo-health-macos
+
+Quick download:
+
+- [![Download Windows](https://img.shields.io/badge/download-windows-2ea043?style=for-the-badge)](https://github.com/skunpro/repo-health/releases/latest/download/repo-health-windows.exe)
+- [![Download Linux](https://img.shields.io/badge/download-linux-2ea043?style=for-the-badge)](https://github.com/skunpro/repo-health/releases/latest/download/repo-health-linux)
+- [![Download macOS](https://img.shields.io/badge/download-macos-2ea043?style=for-the-badge)](https://github.com/skunpro/repo-health/releases/latest/download/repo-health-macos)
+
+Or open the Releases page: https://github.com/skunpro/repo-health/releases/latest
 
 ### Verify downloads (recommended)
 
 Windows (PowerShell):
 
 ```powershell
-Get-FileHash .\repo-health-<version>-<target>.exe -Algorithm SHA256
+Get-FileHash .\repo-health-windows.exe -Algorithm SHA256
 ```
 
 Or:
 
 ```powershell
-CertUtil -hashfile .\repo-health-<version>-<target>.exe SHA256
+CertUtil -hashfile .\repo-health-windows.exe SHA256
 ```
 
 Compare it with the `SHA256SUMS.txt` asset from the same Release (it contains hashes for all binaries).
@@ -33,7 +45,7 @@ Compare it with the `SHA256SUMS.txt` asset from the same Release (it contains ha
 
 ### Windows (non-technical)
 
-1. Download `repo-health.exe` from GitHub Releases.
+1. Download the latest Windows `.exe` from the links above.
 2. Run it (double-click) or drag & drop a folder onto the `.exe`.
 3. In the UI press `h` for help.
 

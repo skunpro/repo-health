@@ -42,9 +42,12 @@ jobs:
           $TARGET=(rustc -vV | Select-String '^host:' | ForEach-Object { $_.Line.Split(':')[1].Trim() })
           $TAG=$env:GITHUB_REF_NAME
           $NAME="repo-health-$TAG-$TARGET.exe"
+          $LATEST="repo-health-windows.exe"
           Copy-Item target\release\repo-health.exe "dist\$NAME"
+          Copy-Item target\release\repo-health.exe "dist\$LATEST"
           $HASH=(Get-FileHash -Algorithm SHA256 "dist\$NAME").Hash.ToLower()
           "$HASH  $NAME" | Out-File -FilePath "dist\SHA256SUMS-$TARGET.txt" -Encoding ascii
+          "$HASH  $LATEST" | Out-File -FilePath "dist\SHA256SUMS-$TARGET.txt" -Encoding ascii -Append
 
       - name: Prepare artifact (Unix)
         if: runner.os != 'Windows'
@@ -54,8 +57,10 @@ jobs:
           TARGET="$(rustc -vV | sed -n 's/^host: //p')"
           TAG="${GITHUB_REF_NAME}"
           NAME="repo-health-$TAG-$TARGET"
+          if [ "${RUNNER_OS}" = "Linux" ]; then LATEST="repo-health-linux"; else LATEST="repo-health-macos"; fi
           cp target/release/repo-health "dist/$NAME"
-          (cd dist && shasum -a 256 "$NAME" > "SHA256SUMS-$TARGET.txt" 2>/dev/null) || (cd dist && sha256sum "$NAME" > "SHA256SUMS-$TARGET.txt")
+          cp target/release/repo-health "dist/$LATEST"
+          (cd dist && (shasum -a 256 "$NAME" "$LATEST" > "SHA256SUMS-$TARGET.txt" 2>/dev/null || sha256sum "$NAME" "$LATEST" > "SHA256SUMS-$TARGET.txt"))
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
