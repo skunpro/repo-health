@@ -1,7 +1,11 @@
 [package]
 name = "repo-health"
-version = "0.1.0"
+version = "0.0.3"
 edition = "2024"
+description = "Repo health scanner with a terminal UI (score, checks, baselines, reports)."
+license = "MIT"
+repository = "https://github.com/skunpro/repo-health"
+readme = "README.md"
 
 [dependencies]
 anyhow = "1.0.99"

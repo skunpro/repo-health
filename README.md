@@ -1,5 +1,8 @@
 # Repo health scanner with a terminal UI.
 
+[![Release](https://github.com/skunpro/repo-health/actions/workflows/release.yml/badge.svg)](https://github.com/skunpro/repo-health/actions/workflows/release.yml)
+[![CI](https://github.com/skunpro/repo-health/actions/workflows/ci.yml/badge.svg)](https://github.com/skunpro/repo-health/actions/workflows/ci.yml)
+
 It scans a folder and produces:
 - a score (0–100)
 - a list of checks (info / warn / error) with suggested fixes
@@ -60,6 +63,10 @@ repo-health --mode pretty path/to/repo --fail-on error
 - Navigation: ↑/↓ or j/k (select), PgUp/PgDn (scroll details)
 - Actions: o (open folder), r (rescan), b (save baseline), e (export report), h/? (help)
 - Exit: q / Esc
+
+## Contributing
+
+See CONTRIBUTING.md.
 
 ## Contributors
 
