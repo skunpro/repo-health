@@ -3,6 +3,8 @@
 [![Release](https://github.com/skunpro/repo-health/actions/workflows/release.yml/badge.svg)](https://github.com/skunpro/repo-health/actions/workflows/release.yml)
 [![CI](https://github.com/skunpro/repo-health/actions/workflows/ci.yml/badge.svg)](https://github.com/skunpro/repo-health/actions/workflows/ci.yml)
 
+![repo-health TUI](https://skun.pro/assets/upload/1775561672249a918cdee.21646364.png)
+
 It scans a folder and produces:
 - a score (0–100)
 - a list of checks (info / warn / error) with suggested fixes
