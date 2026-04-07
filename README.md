@@ -13,6 +13,16 @@ It scans a folder and produces:
 
 Recommended: download the `repo-health` binary from GitHub Releases.
 
+### Verify downloads (recommended)
+
+Windows (PowerShell):
+
+```powershell
+Get-FileHash .\repo-health.exe -Algorithm SHA256
+```
+
+Compare it with the `SHA256SUMS.txt` asset from the same Release.
+
 ## Quick start
 
 ### Windows (non-technical)

@@ -39,14 +39,21 @@ jobs:
         shell: pwsh
         run: |
           New-Item -ItemType Directory -Force -Path dist | Out-Null
-          Copy-Item target\release\repo-health.exe dist\
+          $TARGET=(rustc -vV | Select-String '^host:' | ForEach-Object { $_.Line.Split(':')[1].Trim() })
+          $NAME="repo-health-$TARGET.exe"
+          Copy-Item target\release\repo-health.exe "dist\$NAME"
+          $HASH=(Get-FileHash -Algorithm SHA256 "dist\$NAME").Hash.ToLower()
+          "$HASH  $NAME" | Out-File -FilePath dist\SHA256SUMS.txt -Encoding ascii
 
       - name: Prepare artifact (Unix)
         if: runner.os != 'Windows'
         shell: bash
         run: |
           mkdir -p dist
-          cp target/release/repo-health dist/
+          TARGET="$(rustc -vV | sed -n 's/^host: //p')"
+          NAME="repo-health-$TARGET"
+          cp target/release/repo-health "dist/$NAME"
+          (cd dist && shasum -a 256 "$NAME" > SHA256SUMS.txt 2>/dev/null) || (cd dist && sha256sum "$NAME" > SHA256SUMS.txt)
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
