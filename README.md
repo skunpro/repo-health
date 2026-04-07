@@ -18,10 +18,16 @@ Recommended: download the `repo-health` binary from GitHub Releases.
 Windows (PowerShell):
 
 ```powershell
-Get-FileHash .\repo-health.exe -Algorithm SHA256
+Get-FileHash .\repo-health-<version>-<target>.exe -Algorithm SHA256
 ```
 
-Compare it with the `SHA256SUMS.txt` asset from the same Release.
+Or:
+
+```powershell
+CertUtil -hashfile .\repo-health-<version>-<target>.exe SHA256
+```
+
+Compare it with the `SHA256SUMS.txt` asset from the same Release (it contains hashes for all binaries).
 
 ## Quick start
 

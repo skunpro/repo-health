@@ -40,10 +40,11 @@ jobs:
         run: |
           New-Item -ItemType Directory -Force -Path dist | Out-Null
           $TARGET=(rustc -vV | Select-String '^host:' | ForEach-Object { $_.Line.Split(':')[1].Trim() })
-          $NAME="repo-health-$TARGET.exe"
+          $TAG=$env:GITHUB_REF_NAME
+          $NAME="repo-health-$TAG-$TARGET.exe"
           Copy-Item target\release\repo-health.exe "dist\$NAME"
           $HASH=(Get-FileHash -Algorithm SHA256 "dist\$NAME").Hash.ToLower()
-          "$HASH  $NAME" | Out-File -FilePath dist\SHA256SUMS.txt -Encoding ascii
+          "$HASH  $NAME" | Out-File -FilePath "dist\SHA256SUMS-$TARGET.txt" -Encoding ascii
 
       - name: Prepare artifact (Unix)
         if: runner.os != 'Windows'
@@ -51,9 +52,10 @@ jobs:
         run: |
           mkdir -p dist
           TARGET="$(rustc -vV | sed -n 's/^host: //p')"
-          NAME="repo-health-$TARGET"
+          TAG="${GITHUB_REF_NAME}"
+          NAME="repo-health-$TAG-$TARGET"
           cp target/release/repo-health "dist/$NAME"
-          (cd dist && shasum -a 256 "$NAME" > SHA256SUMS.txt 2>/dev/null) || (cd dist && sha256sum "$NAME" > SHA256SUMS.txt)
+          (cd dist && shasum -a 256 "$NAME" > "SHA256SUMS-$TARGET.txt" 2>/dev/null) || (cd dist && sha256sum "$NAME" > "SHA256SUMS-$TARGET.txt")
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
@@ -70,6 +72,13 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           path: artifacts
+
+      - name: Build SHA256SUMS.txt
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd artifacts
+          find . -name 'SHA256SUMS-*.txt' -print0 | sort -z | xargs -0 cat > SHA256SUMS.txt
 
       - name: Publish GitHub Release
         uses: softprops/action-gh-release@v2
