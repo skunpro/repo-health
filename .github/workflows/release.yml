@@ -51,7 +51,7 @@ jobs:
           chmod +x "dist/$NAME"
 
       - name: Upload artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: repo-health-${{ runner.os }}
           path: dist/*
